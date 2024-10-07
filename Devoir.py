@@ -4,7 +4,7 @@ import math
 #nombre entier positif rentré par l'utilisateur
 nbr = (input("Entrez un nombre positif (0 pour arrêter):"))
 
-while int(nbr) >= 0:
+while nbr.isdigit():
     if int(nbr) > 0:
         #Variable qui détermine la chaine entiere de décomposition
         decomp = nbr + " = "
