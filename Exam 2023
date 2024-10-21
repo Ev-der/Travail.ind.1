@@ -1,0 +1,28 @@
+#Examen pratique de 2023
+
+
+phrase = input('Saisissez une phrase interrogative : ')
+validite = 0
+while validite == 0:
+
+     if phrase.count('-il')== 1 or phrase.count('-tu')== 1:
+         if phrase.count('  ')==0 :
+            if  phrase[-1]=='?' and not phrase.endswith(' ?') :
+                validite = 1
+     phrase = input('Erreur; Saisissez une phrase interrogative : ')
+
+lettre = input('Saisissez une lettre à substituer :')
+sub = input('Saisissez deux lettres de substitution:')
+if lettre.isalpha() and sub.isalpha():
+    if len(sub) == 2:
+        longueur = len(phrase)
+        compteur = 0
+        new_phrase = ''
+        for caractere in range (longueur):
+            if phrase[caractere]== lettre:
+                new_phrase += sub
+                compteur += 1
+            else:
+                new_phrase += phrase[caractere]
+        print('La nouvelle phrase est: '+ new_phrase)
+        print('Le nombre de substitution est :' + str(compteur))
