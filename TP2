@@ -1,28 +1,48 @@
 from http.cookiejar import uppercase_escaped_char
 
+from gestion_foot import list_efficacité
+
 noms = []
 postes = []
 vitesse = []
-passes= []
-tirs= []
-buts= []
+nb_passes= []
+nb_tirs= []
+nb_buts= []
+list_efficacité=[]
 def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int], list[int], list[int]]:
     Info_liste= ma_chaine.split(' ')
     nom_complet = ' '.join(Info_liste[:2])
     noms.append(nom_complet)
     (Info_liste[2])[0].upper()
     postes.append(Info_liste[2])
-    vitesse.append(Info_liste[3])
-    passes.append(Info_liste[4])
-    tirs.append(Info_liste[5])
-    buts.append(Info_liste[6])
-    return noms, postes, vitesse,passes, tirs, buts
-
+    vitesse.append(float(Info_liste[3]))
+    nb_passes.append(int(Info_liste[4]))
+    nb_tirs.append(int(Info_liste[5]))
+    nb_buts.append(int(Info_liste[6]))
+    return noms, postes, vitesse,nb_passes, nb_tirs,nb_buts
+#1: Saisie des informations des joueurs
 for i in range (1,6):
     ma_chaine = input('Donnez les informations du joueur ' + str(i) + ': ')
-    ma_chaine = (ma_chaine[(ma_chaine[ma_chaine.find(' ')+2:]).find(' ')+1:])[0].upper()
-    print(ma_chaine)
+#majuscule:_________________________________________
     while (ma_chaine.count('Défenseur')+ ma_chaine.count('Attaquant') + ma_chaine.count('Milieu')
          + ma_chaine.count('Gardien')!= 1):
        ma_chaine = input('Donnez les informations du joueur ' + str(i)+ ': ')
-peupler(ma_chaine)
+    peupler(ma_chaine) #Appel de la fonction peupler
+print(noms,postes, vitesse,nb_passes, nb_tirs, nb_buts)
+
+#2
+def efficacite(vitesse: float, nb_passes: int, nb_tirs: int, nb_buts: int) -> float:
+    for i in range (1,6):
+        Efficacité = 30*vitesse[i-1]+40*nb_passes[i-1]+20*nb_tirs[i-1]+10*nb_buts[i-1]
+        list_efficacité.append(Efficacité)
+    return Efficacité
+
+#3 Affichage des informations
+def affichage_informations(noms: List[str], postes: List[str], vitesse: List[float], passes: List[int],
+                           tirs: List[int], buts: List[int]) -> None:
+    print('----------------------------------------------Liste des joueurs------------------------------------------------')
+    for i in range (1,6):
+        print('----------------------------------------\n Nom : '+ noms[i-1]+'\n Poste : '
+              + postes[i-1] + '\n Vitesse : ' + str(vitesse[i-1])+ '\n Passes : '+ nb_passes[i-1]
+              +'\n Tirs cadrés : '+ str(nb_tirs[i-1])+ '\n Buts : '+ str(nb_buts[i-1])
+              +'\n Efficacité : '+ str(list_efficacité[i-1]))
