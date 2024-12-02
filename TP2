@@ -1,6 +1,3 @@
-from http.cookiejar import uppercase_escaped_char
-
-from gestion_foot import list_efficacité
 
 noms = []
 postes = []
@@ -9,6 +6,7 @@ nb_passes= []
 nb_tirs= []
 nb_buts= []
 list_efficacité=[]
+#1
 def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int], list[int], list[int]]:
     Info_liste= ma_chaine.split(' ')
     nom_complet = ' '.join(Info_liste[:2])
@@ -20,6 +18,27 @@ def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int
     nb_tirs.append(int(Info_liste[5]))
     nb_buts.append(int(Info_liste[6]))
     return noms, postes, vitesse,nb_passes, nb_tirs,nb_buts
+
+#2
+def efficacite(vitesse: float, nb_passes: int, nb_tirs: int, nb_buts: int) -> float:
+    Performance = (30*vitesse+40*nb_passes+20*nb_tirs+10*nb_buts)/100
+    return Performance
+
+#3 Affichage des informations
+def affichage_informations(noms: list[str], postes: list[str], vitesse: list[float], nb_passes: list[int],
+                           nb_tirs: list[int], nb_buts: list[int]) -> None:
+    print('----------------------------------------------Liste des joueurs------------------------------------------------')
+    for i in range (1,6):
+        print('----------------------------------------')
+        print('Nom : '+ noms[i-1])
+        print('Poste : '+ postes[i-1] )
+        print('Vitesse : ' + str(vitesse[i-1]))
+        print('Passes : '+ str(nb_passes[i-1]))
+        print('Tirs cadrés : '+ str(nb_tirs[i-1]))
+        print('Buts : '+ str(nb_buts[i-1]))
+        print(' Efficacité : '+ str(efficacite(vitesse[i-1],nb_passes[i-1],nb_tirs[i-1],nb_buts[i-1])))
+#-------------------------------------------Code--------------------------------------------- 
+
 #1: Saisie des informations des joueurs
 for i in range (1,6):
     ma_chaine = input('Donnez les informations du joueur ' + str(i) + ': ')
@@ -30,19 +49,7 @@ for i in range (1,6):
     peupler(ma_chaine) #Appel de la fonction peupler
 print(noms,postes, vitesse,nb_passes, nb_tirs, nb_buts)
 
-#2
-def efficacite(vitesse: float, nb_passes: int, nb_tirs: int, nb_buts: int) -> float:
-    for i in range (1,6):
-        Efficacité = 30*vitesse[i-1]+40*nb_passes[i-1]+20*nb_tirs[i-1]+10*nb_buts[i-1]
-        list_efficacité.append(Efficacité)
-    return Efficacité
+#3 Affichage des informations sur le joueur
+affichage_informations(noms, postes, vitesse, nb_passes, nb_tirs, nb_buts)
 
-#3 Affichage des informations
-def affichage_informations(noms: List[str], postes: List[str], vitesse: List[float], passes: List[int],
-                           tirs: List[int], buts: List[int]) -> None:
-    print('----------------------------------------------Liste des joueurs------------------------------------------------')
-    for i in range (1,6):
-        print('----------------------------------------\n Nom : '+ noms[i-1]+'\n Poste : '
-              + postes[i-1] + '\n Vitesse : ' + str(vitesse[i-1])+ '\n Passes : '+ nb_passes[i-1]
-              +'\n Tirs cadrés : '+ str(nb_tirs[i-1])+ '\n Buts : '+ str(nb_buts[i-1])
-              +'\n Efficacité : '+ str(list_efficacité[i-1]))
+
