@@ -5,7 +5,7 @@ vitesse = []
 nb_passes= []
 nb_tirs= []
 nb_buts= []
-list_efficacité=[]
+
 #1
 def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int], list[int], list[int]]:
     Info_liste= ma_chaine.split(' ')
