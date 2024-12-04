@@ -1,4 +1,4 @@
-from typing import List, Tuple
+
 import math
 ############################################
 # Eva Desbiens <Ev-der>
@@ -14,15 +14,15 @@ moyenne_équipe=0 #Variable globale
 
 
 def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int], list[int], list[int]]:
-    Info_liste= ma_chaine.split(' ')
-    nom_complet = ' '.join(Info_liste[:-5])
+    info_liste= ma_chaine.split(' ')
+    nom_complet = ' '.join(info_liste[:-5])
     noms.append(nom_complet)
-    (Info_liste[-5])[0].upper()
-    postes.append(Info_liste[-5])
-    vitesse.append(float(Info_liste[-4]))
-    passes.append(int(Info_liste[-3]))
-    tirs.append(int(Info_liste[-2]))
-    buts.append(int(Info_liste[-1]))
+    (info_liste[-5])[0].upper()
+    postes.append(info_liste[-5])
+    vitesse.append(float(info_liste[-4]))
+    passes.append(int(info_liste[-3]))
+    tirs.append(int(info_liste[-2]))
+    buts.append(int(info_liste[-1]))
     return noms, postes, vitesse,passes, tirs,buts
 
 
@@ -48,8 +48,16 @@ def affichage_informations(noms: list[str], postes: list[str], vitesse: list[flo
 
 def meilleurs_joueurs(noms: list[str], postes: list[str], vitesse: list[float], passes: list[int], tirs: list[int],
                       buts: list[int]) -> None:
-    pass 
-
+    eff_equipe=[]
+    print('Le(s) meilleur(s) joueur(s) de l\'équipe sont/est : ')
+    for joueur in range(len(noms)):
+        eff_equipe.append(efficacite(vitesse[joueur],passes[joueur],tirs[joueur],buts[joueur]))
+    eff_equipe.sort()
+    for joueur in range(len(noms)):
+        if (efficacite(vitesse[joueur],passes[joueur],tirs[joueur],buts[joueur])) == eff_equipe[-1]:
+            print(noms[joueur]+' au poste '+postes[joueur])
+        else:
+            pass
 
 
 def moyenne_efficacites(vitesse: list[float], passes: list[int], tirs: list[int], buts: list[int]) -> float:
@@ -64,11 +72,11 @@ def moyenne_efficacites(vitesse: list[float], passes: list[int], tirs: list[int]
 def ecart_type(vitesse: list[float], passes: list[int], tirs: list[int], buts: list[int]) -> float:
     car_ecart = 0 #Variable interne
     for joueur in range(len(vitesse)):
-        car_ecart= (efficacite(vitesse[joueur], passes[joueur], tirs[joueur], buts[joueur])-moyenne_équipe)**2+car_ecart
+        car_ecart= (efficacite(vitesse[joueur], passes[joueur], tirs[joueur], buts[joueur])
+                    -moyenne_efficacites(vitesse,passes,tirs,buts))**2+car_ecart
     Variance = car_ecart/len(vitesse)
     Ecart_type= math.sqrt(Variance)
     return Ecart_type
-
 
 def division(seuil: float, noms: list[str], vitesse: list[float], passes: list[int], tirs: list[int], buts: list[int])\
         -> tuple[list[str], list[str]]:
@@ -82,9 +90,18 @@ def division(seuil: float, noms: list[str], vitesse: list[float], passes: list[i
     return list_pro,list_nul
 
 
-
 def trier_efficacite(noms: list[str], postes: list[str], vitesse: list[float], passes: list[int], tirs: list[int],
                      buts: list[int]) -> None:
+    eff_equipe=[]
+    for joueur in range(len(noms)):
+        eff_equipe.append(efficacite(vitesse[joueur],passes[joueur],tirs[joueur],buts[joueur]))
+    eff_equipe.sort(reverse=True)
+    for place in range(len(eff_equipe)):
+        for joueur in range(len(noms)):
+            if (eff_equipe[place])==(efficacite(vitesse[joueur],passes[joueur],tirs[joueur],buts[joueur])):
+                print(str(place+1)+'.'+noms[joueur]+ '('+ postes[joueur] +')  - Efficacité : '+ str(eff_equipe[place]))
+            else:
+                pass
 ---------------------------------------------------------------------------------
 
 noms = []
