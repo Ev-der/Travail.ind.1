@@ -1,24 +1,25 @@
 
-import math
-from os import remove
-
 ############################################
 # Eva Desbiens <Ev-der>
 # Prénom2 Nom2 <github username>
 ############################################
+
+import math
+
+#Variables globales définies (listes)
 noms = []
 postes = []
 vitesse = []
 passes= []
 tirs= []
 buts= []
-moyenne_équipe=0 #Variable globale
+
 
 
 def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int], list[int], list[int]]:
     #Séparation de notre chaîne de caractères en liste
     info_liste= ma_chaine.split(' ')
-    #Si il y a plusieurs espaces séparant les données
+    #S'il y a plusieurs espaces séparant les données
     while '' in info_liste:
         info_liste.remove('')
     #Nom complet en majuscule
