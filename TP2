@@ -23,8 +23,8 @@ def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int
     while '' in info_liste:
         info_liste.remove('')
     #Nom complet en majuscule
-    for cap in range(len(info_liste[:-5])):
-        info_liste[cap]=info_liste[cap].capitalize()
+    #for cap in range(len(info_liste[:-5])):
+        #info_liste[cap]=info_liste[cap].capitalize()
     # Attribution des données dans leur liste respective
     nom_complet = ' '.join(info_liste[:-5])
     noms.append(nom_complet)
@@ -121,7 +121,7 @@ def trier_efficacite(noms: list[str], postes: list[str], vitesse: list[float], p
         if eff_equipe != []:
             for joueur in range(len(noms)):
                 if (eff_equipe[place]) == (efficacite(vitesse[joueur], passes[joueur], tirs[joueur], buts[joueur])):
-                    print(str(place + 1) + '.' + noms[joueur] + '(' + postes[joueur] + ') - Efficacité : ' + str(
+                    print(str(place + 1) + '.' + noms[joueur] + ' (' + postes[joueur] + ') - Efficacité : ' + str(
                         eff_equipe[place]))
                     del eff_equipe[place]
                 else:
@@ -133,7 +133,7 @@ def trier_efficacite(noms: list[str], postes: list[str], vitesse: list[float], p
 #1: Saisie des informations des joueurs
 for i in range (1,6):
     ma_chaine = input('Donnez les informations du joueur ' + str(i) + ': ')
-#majuscule:_________________________________________
+    ma_chaine= ma_chaine.title() #poste et nom en majuscule
     while (ma_chaine.count('Défenseur')+ ma_chaine.count('Attaquant') + ma_chaine.count('Milieu')
          + ma_chaine.count('Gardien')!= 1):
        ma_chaine = input('Donnez les informations du joueur ' + str(i)+ ': ')
