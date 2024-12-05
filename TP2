@@ -38,12 +38,13 @@ def affichage_informations(noms: list[str], postes: list[str], vitesse: list[flo
         print('----------------------------------------')
         print('Nom : '+ noms[joueur])
         print('Poste : '+ postes[joueur] )
-        print('Vitesse : ' + str(vitesse[joueur]))
+        print('Vitesse : ' + str(vitesse[joueur])+' km/h')
         print('Passes : '+ str(passes[joueur]))
         print('Tirs cadrés : '+ str(tirs[joueur]))
         print('Buts : '+ str(buts[joueur]))
         #Appel de la fonction efficacité
         print(' Efficacité : '+ str(efficacite(vitesse[joueur],passes[joueur],tirs[joueur],buts[joueur])))
+    print('--------------------------------------------')
 
 
 def meilleurs_joueurs(noms: list[str], postes: list[str], vitesse: list[float], passes: list[int], tirs: list[int],
@@ -83,7 +84,7 @@ def division(seuil: float, noms: list[str], vitesse: list[float], passes: list[i
     list_pro, list_nul = [], []         #Listes internes
     for joueur in range(len(noms)):
         eff_joueur= efficacite(vitesse[joueur], passes[joueur], tirs[joueur], buts[joueur])
-        if eff_joueur >= seuil:
+        if int(eff_joueur) >= int(seuil):
             list_pro.append(noms[joueur])
         else:
             list_nul.append(noms[joueur])
@@ -99,50 +100,11 @@ def trier_efficacite(noms: list[str], postes: list[str], vitesse: list[float], p
     for place in range(len(eff_equipe)):
         for joueur in range(len(noms)):
             if (eff_equipe[place])==(efficacite(vitesse[joueur],passes[joueur],tirs[joueur],buts[joueur])):
-                print(str(place+1)+'.'+noms[joueur]+ '('+ postes[joueur] +')  - Efficacité : '+ str(eff_equipe[place]))
+                print(str(place+1)+'.'+noms[joueur]+ '('+ postes[joueur] +') - Efficacité : '+ str(eff_equipe[place]))
+                del noms[joueur]
             else:
                 pass
----------------------------------------------------------------------------------
-
-noms = []
-postes = []
-vitesse = []
-passes= []
-tirs= []
-buts= []
-
-#1
-def peupler(ma_chaine: str) -> tuple[list[str], list[str], list[float], list[int], list[int], list[int]]:
-    Info_liste= ma_chaine.split(' ')
-    nom_complet = ' '.join(Info_liste[:-5])
-    noms.append(nom_complet)
-    (Info_liste[-5])[0].upper()
-    postes.append(Info_liste[-5])
-    vitesse.append(float(Info_liste[-4]))
-    passes.append(int(Info_liste[-3]))
-    tirs.append(int(Info_liste[-2]))
-    buts.append(int(Info_liste[-1]))
-    return noms, postes, vitesse,passes, tirs,buts
-
-#2
-def efficacite(vitesse: float, passes: int, tirs: int, buts: int) -> float:
-    Performance = (30*vitesse+40*passes+20*tirs+10*buts)/100
-    return Performance
-
-#3 Affichage des informations
-def affichage_informations(noms: list[str], postes: list[str], vitesse: list[float], passes: list[int],
-                           tirs: list[int], buts: list[int]) -> None:
-    print('----------------------------------------------Liste des joueurs------------------------------------------------')
-    for i in range (1,6):
-        print('----------------------------------------')
-        print('Nom : '+ noms[i-1])
-        print('Poste : '+ postes[i-1] )
-        print('Vitesse : ' + str(vitesse[i-1]))
-        print('Passes : '+ str(passes[i-1]))
-        print('Tirs cadrés : '+ str(tirs[i-1]))
-        print('Buts : '+ str(buts[i-1]))
-        print(' Efficacité : '+ str(efficacite(vitesse[i-1],passes[i-1],tirs[i-1],buts[i-1])))
-#-------------------------------------------Code---------------------------------------------
+#------------------------------------Code----------------------------------------#
 
 #1: Saisie des informations des joueurs
 for i in range (1,6):
@@ -156,3 +118,18 @@ print(noms,postes, vitesse,passes, tirs, buts)
 
 #3 Affichage des informations sur le joueur
 affichage_informations(noms, postes, vitesse, passes, tirs, buts)
+
+#4 Affichage des meilleurs joueurs
+meilleurs_joueurs(noms,postes,vitesse,passes,tirs,buts)
+
+#7 Implémentation d'un seuil
+réponse = input('Définissez un seuil (\' non\' pour d/finir l\'écart type en seuil) :' )
+if réponse == ('non' or 'Non'):
+    seuil=ecart_type(vitesse,passes,tirs,buts)
+else:
+    seuil = réponse
+print('Les joueurs dépassant le seuil définit : '+ str(division(seuil,noms,vitesse,passes,tirs,buts)[0]))
+print('Les joueurs ne dépassant pas le seuil définit : '+str(division(seuil,noms,vitesse,passes,tirs,buts)[1]))
+print('--------------------------------------------')
+print('Palmarès des joueurs :')
+trier_efficacite(noms,postes,vitesse,passes,tirs,buts)
